@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f6b4f">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>SIF Explorer – Specialised Investment Funds, India</title>
+<style>
+:root{--bg:#fafaf7;--card:#fff;--fg:#1c1f1d;--mut:#5d655f;--line:#e2e4de;--acc:#0f6b4f;--accbg:#e4f2ec;--warn:#7a4f00;--warnbg:#fff3d6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121513;--card:#1b1f1c;--fg:#eceee9;--mut:#a0a8a2;--line:#2c322e;--acc:#5fcf9f;--accbg:#173025;--warn:#f0c772;--warnbg:#3a2f14;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121513;--card:#1b1f1c;--fg:#eceee9;--mut:#a0a8a2;--line:#2c322e;--acc:#5fcf9f;--accbg:#173025;--warn:#f0c772;--warnbg:#3a2f14;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:4px 0}h2{font-size:17px;margin:20px 0 8px}
+.sub{color:var(--mut);margin:0 0 12px}
+.note{background:var(--warnbg);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:13px;margin:10px 0}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:12px 0;border-bottom:1px solid var(--line)}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;color:var(--mut);padding:8px 12px;font:inherit;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--acc);border-color:var(--acc);font-weight:600}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg);font:inherit}
+button.b{background:var(--acc);color:var(--bg);border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.name{font-weight:600}.mut{color:var(--mut);font-size:13px}
+.chip{display:inline-block;background:var(--accbg);color:var(--acc);border-radius:99px;padding:1px 9px;font-size:12px;margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:10px;font-size:13px}
+.stats div{background:var(--bg);border-radius:8px;padding:6px 8px}
+.stats b{display:block;font-size:15px}.stats small{display:block;color:var(--mut);font-size:11px}
+.na{color:var(--mut);font-weight:600}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:480px;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}th{color:var(--mut);font-weight:500}
+.cmp{display:flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap}.cmp input{width:auto}
+.res{font-size:18px;font-weight:600;margin:10px 0}.ok{color:var(--acc)}.no{color:var(--warn)}
+details{margin:16px 0}summary{cursor:pointer;color:var(--acc)}
+#inst{margin:6px 0}
+footer{color:var(--mut);font-size:12px;margin:24px 0 8px}
+</style></head><body><div class="wrap">
+<h1>SIF Explorer</h1>
+<p class="sub">Information and comparison for Specialised Investment Funds in India</p>
+<div id="inst"></div><div class="mut" id="stat"></div>
+<div class="note" id="demo"></div>
+<div class="tabs" role="tablist" id="tabs"></div>
+<div id="v"></div>
+<footer>For information only. This is not investment advice or a recommendation. Past performance may or may not be sustained in future. Mutual fund investments are subject to market risks; read all scheme related documents carefully. Check figures against the AMC’s official documents before relying on them.</footer>
+</div>
+<script>
+const SAMPLE={asOf:"2026-10-31",demo:true,funds:[
+{id:"s1",name:"Sample Hybrid Long-Short Fund",amc:"Sample AMC A",cat:"Hybrid long-short",launch:"2025-10-15",exp:1.9,exit:"1% if redeemed within 6 months (sample)",mgr:"Manager One",r1:8.4,src:""},
+{id:"s2",name:"Sample Equity Long-Short Fund",amc:"Sample AMC B",cat:"Equity long-short",launch:"2025-10-28",exp:2.1,exit:"Nil (sample)",mgr:"Manager Two",r1:11.2,src:""},
+{id:"s3",name:"Sample Active Asset Allocator Long-Short Fund",amc:"Sample AMC A",cat:"Active asset allocator long-short",launch:"2026-01-12",exp:1.8,exit:"Nil (sample)",mgr:"Manager One",src:""},
+{id:"s4",name:"Sample Debt Long-Short Fund",amc:"Sample AMC C",cat:"Debt long-short",launch:"2026-03-03",exp:1.2,exit:"0.5% if redeemed within 3 months (sample)",mgr:"Manager Three",src:""},
+{id:"s5",name:"Sample Sector Rotation Long-Short Fund",amc:"Sample AMC B",cat:"Sector rotation long-short",launch:"2026-05-20",exp:2.3,exit:"1% if redeemed within 6 months (sample)",mgr:"Manager Two",src:""},
+{id:"s6",name:"Sample Hybrid Long-Short Fund II",amc:"Sample AMC C",cat:"Hybrid long-short",launch:"2026-06-30",exp:1.95,exit:"Nil (sample)",mgr:"Manager Three",src:""}]};
+let D=SAMPLE,sel=[],tab="funds",amts=[0,0,0],q="",fc="",fa="",so="name";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ageY=f=>(new Date(D.asOf)-new Date(f.launch))/(365.25*864e5);
+const av=(f,n)=>ageY(f)>=n&&typeof f["r"+n]==="number";
+const money=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+const dt=s=>new Date(s).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+function perf(f,n){
+ if(av(f,n)){const v=f["r"+n];return `<b>${v.toFixed(2)}%</b><small>₹10,000 → ${money(1e4*Math.pow(1+v/100,n))}</small>`}
+ return `<b class="na">NA</b><small>${ageY(f)<n?"scheme under "+n+(n>1?" years":" year"):"not reported"}</small>`}
+function perfLine(f,n){return av(f,n)?`${n}Y ${f["r"+n].toFixed(2)}%`:`${n}Y NA`}
+function others(f){const o=D.funds.filter(x=>x.mgr&&x.mgr===f.mgr&&x.id!==f.id);
+ return o.length?o.map(x=>`${esc(x.name)}: ${perfLine(x,1)} · ${perfLine(x,3)} · ${perfLine(x,5)}`).join("<br>"):"None in this list"}
+function setTab(t){tab=t;drawTabs();draw()}
+function drawTabs(){const T=[["funds","Funds"],["compare","Compare"+(sel.length?" ("+sel.length+")":"")],["thr","₹10 lakh check"],["learn","Learn"],["data","Data"]];
+ $("#tabs").innerHTML=T.map(t=>`<button role="tab" aria-selected="${tab===t[0]}" onclick="setTab('${t[0]}')">${t[1]}</button>`).join("")}
+function draw(){
+ $("#demo").style.display=D.demo?"block":"none";
+ $("#demo").textContent="Demo data: these are made-up sample funds so you can see how the app works. Load real data from AMC and AMFI documents in the Data tab.";
+ ({funds:drawFunds,compare:drawCompare,thr:drawThr,learn:drawLearn,data:drawData})[tab]()}
+function drawFunds(){
+ const cats=[...new Set(D.funds.map(f=>f.cat))].sort(),amcs=[...new Set(D.funds.map(f=>f.amc))].sort();
+ const opt=(a,v)=>a.map(x=>`<option ${x===v?"selected":""}>${esc(x)}</option>`).join("");
+ const SO=[["name","Name (A–Z)"],["amc","AMC (A–Z)"],["exp","Expense ratio (low to high)"],["launch","Launch date (newest first)"],["r1","1-year CAGR (high to low)"],["r3","3-year CAGR (high to low)"],["r5","5-year CAGR (high to low)"]];
+ $("#v").innerHTML=`<div class="ctl"><input id="q" placeholder="Search funds" value="${esc(q)}" oninput="q=this.value;list()">
+ <select onchange="fc=this.value;list()"><option value="">All categories</option>${opt(cats,fc)}</select>
+ <select onchange="fa=this.value;list()"><option value="">All AMCs</option>${opt(amcs,fa)}</select>
+ <select aria-label="Sort by" onchange="so=this.value;list()">${SO.map(s=>`<option value="${s[0]}" ${so===s[0]?"selected":""}>Sort: ${s[1]}</option>`).join("")}</select></div>
+ <div class="note" id="pn"></div><div id="list"></div>`;list()}
+function list(){
+ let L=D.funds.filter(f=>(!fc||f.cat===fc)&&(!fa||f.amc===fa)&&(!q||(f.name+f.amc+f.cat).toLowerCase().includes(q.toLowerCase())));
+ const nm=(a,b)=>a.name.localeCompare(b.name);let msg="";
+ if(so==="name")L.sort(nm);else if(so==="amc")L.sort((a,b)=>a.amc.localeCompare(b.amc)||nm(a,b));
+ else if(so==="exp")L.sort((a,b)=>a.exp-b.exp||nm(a,b));else if(so==="launch")L.sort((a,b)=>new Date(b.launch)-new Date(a.launch));
+ else{const n=+so[1],e=L.filter(f=>av(f,n)).sort((a,b)=>b["r"+n]-a["r"+n]),r=L.filter(f=>!av(f,n)).sort(nm);L=e.concat(r);
+  msg=`${e.length} of ${L.length} funds have a reportable ${n}-year track record; the rest are listed after them in A–Z order. Sorting by returns is not a ranking or a recommendation.`}
+ $("#pn").textContent=(msg?msg+" ":"")+`CAGR as of ${dt(D.asOf)}, shown only for periods the scheme has completed. Past performance may or may not be sustained in future.`;
+ $("#list").innerHTML=L.length?L.map(f=>`<div class="card"><div class="top"><div><div class="name">${esc(f.name)}</div><div class="mut">${esc(f.amc)}${f.mgr?" · "+esc(f.mgr):""}</div><span class="chip">${esc(f.cat)}</span></div>
+ <label class="cmp"><input type="checkbox" ${sel.includes(f.id)?"checked":""} onchange="tog('${esc(f.id)}',this)"> Compare</label></div>
+ <div class="stats"><div><b>${dt(f.launch)}</b><small>Launched</small></div><div><b>${f.exp!=null?f.exp+"%":"NA"}</b><small>Expense ratio</small></div>
+ <div>${perf(f,1)}<small>1Y CAGR</small></div><div>${perf(f,3)}<small>3Y CAGR</small></div><div>${perf(f,5)}<small>5Y CAGR</small></div></div>
+ <div class="mut" style="margin-top:8px">Source: ${f.src?`<a href="${esc(f.src)}" rel="noopener" target="_blank">AMC document</a>`:"not set"} · data as of ${dt(D.asOf)}</div></div>`).join(""):`<p class="mut">No funds match.</p>`}
+function tog(id,el){const i=sel.indexOf(id);if(i>-1)sel.splice(i,1);else if(sel.length<3){sel.push(id)}else{el.checked=false;$("#pn").textContent="You can compare up to 3 funds at a time. Remove one first.";return}drawTabs()}
+function drawCompare(){
+ const F=sel.map(id=>D.funds.find(f=>f.id===id)).filter(Boolean);
+ if(!F.length){$("#v").innerHTML=`<p class="mut">Tick “Compare” on up to 3 funds in the Funds tab.</p>`;return}
+ const R=(l,fn)=>`<tr><th>${l}</th>${F.map(f=>`<td>${fn(f)}</td>`).join("")}</tr>`;
+ $("#v").innerHTML=`<div class="tw"><table><tr><th></th>${F.map(f=>`<th style="color:var(--fg)">${esc(f.name)}</th>`).join("")}</tr>
+ ${R("AMC",f=>esc(f.amc))}${R("Category",f=>esc(f.cat))}${R("Launched",f=>dt(f.launch))}${R("Expense ratio",f=>f.exp!=null?f.exp+"%":"NA")}${R("Exit load",f=>esc(f.exit||"NA"))}${R("Fund manager",f=>esc(f.mgr||"NA"))}
+ ${R("1Y CAGR",f=>perf(f,1))}${R("3Y CAGR",f=>perf(f,3))}${R("5Y CAGR",f=>perf(f,5))}${R("Manager’s other schemes in this list",others)}</table></div>
+ <p class="mut">CAGR as of ${dt(D.asOf)}. Past performance may or may not be sustained in future. Funds are shown in the order you selected them, not ranked.</p>`}
+function drawThr(){
+ $("#v").innerHTML=`<h2>₹10 lakh minimum check</h2><p class="sub">SEBI requires a minimum of ₹10 lakh per investor in total across SIF strategies under the same PAN. SIPs, SWPs and STPs are allowed as long as the combined balance stays above it.</p>
+ <div id="rows"></div><button class="b" onclick="amts.push(0);rows()">Add strategy</button><div class="res" id="tr"></div><div class="mut" id="tm"></div>`;rows()}
+function rows(){
+ $("#rows").innerHTML=amts.map((a,i)=>`<div class="ctl"><input type="number" min="0" inputmode="numeric" placeholder="Amount in ₹ for strategy ${i+1}" value="${a||""}" oninput="amts[${i}]=+this.value||0;thr()"></div>`).join("");thr()}
+function thr(){const t=amts.reduce((a,b)=>a+b,0),m=1e6,ok=t>=m;
+ $("#tr").innerHTML=`Total ${money(t)} <span class="${ok?"ok":"no"}">${ok?"· meets the ₹10 lakh minimum":"· "+money(m-t)+" short of ₹10 lakh"}</span>`;
+ $("#tm").textContent="Illustrative only. Confirm how your AMC and platform apply the threshold, including after redemptions or market movements."}
+function drawLearn(){
+ $("#v").innerHTML=`<h2>What is a SIF?</h2><p>A Specialised Investment Fund is a SEBI-regulated product that sits between mutual funds and PMS or AIFs. It allows more flexible strategies than a regular mutual fund, such as taking short positions through derivatives, and needs a higher minimum investment.</p>
+ <div class="tw"><table><tr><th>Product</th><th>Typical minimum</th></tr><tr><td>Mutual fund</td><td>As low as ₹500 (SIP)</td></tr><tr><td>SIF</td><td>₹10 lakh per investor (aggregate, same PAN)</td></tr><tr><td>PMS</td><td>₹50 lakh</td></tr><tr><td>AIF</td><td>Generally ₹1 crore</td></tr></table></div>
+ <h2>Strategy types you will see</h2>
+ <div class="card"><b>Equity-oriented</b><div class="mut">For example equity long-short: holds long positions in stocks and can take short positions through derivatives.</div></div>
+ <div class="card"><b>Debt-oriented</b><div class="mut">For example debt long-short: uses debt instruments and derivatives to take views on interest rates and credit.</div></div>
+ <div class="card"><b>Hybrid</b><div class="mut">For example hybrid long-short and active asset allocator long-short: mix asset classes and shift between them. Hybrid long-short funds have held most SIF assets so far.</div></div>
+ <p class="mut">Descriptions are simplified. Read each scheme’s offer document for its exact strategy, limits and risks.</p>`}
+function drawData(){
+ $("#v").innerHTML=`<h2>Load your own data</h2><p class="sub">Paste JSON in the same shape as the sample. Fields: asOf (month-end date), funds[] with id, name, amc, cat, launch (YYYY-MM-DD), exp, exit, mgr, r1, r3, r5, src. Leave r1, r3, r5 out when not reportable. Use figures from AMC factsheets or AMFI. Data pasted here lasts only until you close the app; the app normally loads data/sif.json by itself.</p>
+ <textarea id="j" rows="10" spellcheck="false">${esc(JSON.stringify(D,null,1))}</textarea><p><button class="b" onclick="load()">Load data</button> <button class="b" onclick="D=SAMPLE;sel=[];drawTabs();draw()">Reset to sample</button></p><div class="mut" id="jm"></div>`}
+function load(){try{const d=JSON.parse($("#j").value);
+ if(!d.asOf||!Array.isArray(d.funds)||d.funds.some(f=>!f.id||!f.name||!f.amc||!f.cat||!f.launch))throw new Error("Each fund needs id, name, amc, cat and launch, and the data needs asOf.");
+ d.demo=false;D=d;sel=[];drawTabs();$("#jm").textContent="Loaded "+d.funds.length+" funds. This stays only until you close the page."}catch(e){$("#jm").textContent="Could not load: "+e.message}}
+let deferred=null;
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;$("#inst").innerHTML='<button class="b" id="ib">Install app</button>';$("#ib").onclick=async()=>{deferred.prompt();await deferred.userChoice;deferred=null;$("#inst").innerHTML=""}});
+addEventListener("appinstalled",()=>{$("#inst").innerHTML=""});
+async function boot(){
+ $("#demo").style.display="none";$("#v").innerHTML='<p class="mut">Loading data…</p>';drawTabs();
+ try{const r=await fetch("data/sif.json",{cache:"no-cache"});if(!r.ok)throw new Error(r.status);
+  const d=await r.json();if(!d.asOf||!Array.isArray(d.funds))throw new Error("bad data");
+  D=d;$("#stat").textContent=D.demo?"":"Data as of "+dt(D.asOf)}
+ catch(e){$("#stat").textContent="Could not load the latest data, so built-in sample data is shown."}
+ drawTabs();draw()}
+if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+boot();
+</script></body></html>

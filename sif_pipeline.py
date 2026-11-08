@@ -27,7 +27,6 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 CONFIG = BASE / "config.json"
 CACHE = BASE / "cache" / "nav_cache.json"
-META = BASE / "cache" / "meta.json"
 MANUAL = BASE / "manual_fields.csv"
 OUT = BASE / "output"
 MANUAL_COLS = ["scheme_code", "name", "amc", "cat", "launch", "exp", "exit", "mgr", "src"]
@@ -35,8 +34,11 @@ DATE_FORMATS = ("%d-%b-%Y", "%d-%m-%Y", "%Y-%m-%d", "%d/%m/%Y", "%d %b %Y")
 DEFAULT_HDR = ["scheme code", "isin div payout/ isin growth", "isin div reinvestment",
                "scheme name", "plan", "option", "net asset value", "date"]
 DEFAULT_CONFIG = {
-    "latest_nav_url": "",
-    "history_url_template": "",
+    "latest_nav_url": "https://portal.amfiindia.com/spages/SIF_NAVAll.txt",
+    "history_url_template": "https://www.amfiindia.com/api/sif-nav-history?query_type=historical_period"
+                            "&from_date={from}&to_date={to}&sd_id={code}",
+    "history_date_format": "%Y-%m-%d",
+    "history_floor": "2025-04-01",   # SIFs cannot have NAVs before this, so older windows are never fetched
     "history_days": 800,
     "stale_days": 7,
     "plan_filter": {"include": ["regular", "growth"],
@@ -178,6 +180,45 @@ def cagr(navs, asof, n):
     return pct, start[1], start[0], end[1], end[0]
 
 
+def parse_history_json(text, scheme):
+    """Parse AMFI's SIF history API response for one scheme into NAV rows."""
+    try:
+        obj = json.loads(text)
+    except ValueError:
+        raise ValueError("history response is not JSON: " + text[:80].replace("\n", " "))
+    data = obj.get("data") if isinstance(obj, dict) else None
+    if not data:
+        return []  # {"message": "No records to display"}
+    groups = data.get("nav_groups") or []
+    if len(groups) > 1:  # pick the group matching this scheme's plan and option
+        want = (scheme.get("plan", "").lower(), scheme.get("option", "").lower())
+        match = [g for g in groups for r in g.get("historical_records", [])[:1]
+                 if (str(r.get("Plan", "")).lower(), str(r.get("Option", "")).lower()) == want]
+        groups = match or groups[:1]
+    rows = []
+    for g in groups:
+        for r in g.get("historical_records", []):
+            d = parse_date(str(r.get("date", "")))
+            try:
+                nav = float(r.get("nav"))
+            except (TypeError, ValueError):
+                continue
+            if d and nav > 0:
+                rows.append({"code": scheme["code"], "name": scheme["name"], "nav": nav, "date": d})
+    return rows
+
+
+def fetch_history(scheme, start, end, cfg, pause=0.3):
+    rows = []
+    for a, b in date_ranges(start, end):
+        url = cfg["history_url_template"].format(**{"from": a.strftime(cfg["history_date_format"]),
+                                                    "to": b.strftime(cfg["history_date_format"]),
+                                                    "code": scheme["code"]})
+        rows += parse_history_json(fetch(url), scheme)
+        time.sleep(pause)
+    return rows
+
+
 def load_manual():
     if not MANUAL.exists():
         return {}
@@ -204,7 +245,7 @@ def sync_manual(schemes, manual):
     return len(new)
 
 
-def build_funds(schemes, cache, manual, asof, today, stale_days=7, hist_from=None):
+def build_funds(schemes, cache, manual, asof, today, stale_days=7):
     funds, warns, audit, no_launch, no_manual = [], [], [], [], []
     for code, s in sorted(schemes.items()):
         navs = sorted((date.fromisoformat(d), v) for d, v in cache.get(code, {}).get("navs", {}).items())
@@ -216,7 +257,8 @@ def build_funds(schemes, cache, manual, asof, today, stale_days=7, hist_from=Non
         launch = parse_date(m.get("launch", ""))
         if m.get("launch") and not launch:
             warns.append(f"{label}: could not read launch date '{m['launch']}' in manual_fields.csv")
-        if not launch and hist_from and navs[0][0] > hist_from + timedelta(days=10):
+        full_from = parse_date(cache.get(code, {}).get("full_from", ""))
+        if not launch and full_from and navs[0][0] > full_from + timedelta(days=10):
             launch = navs[0][0]  # history reaches back before this scheme, so its first NAV is a good proxy
         if not launch:
             no_launch.append(label)
@@ -261,7 +303,7 @@ def build_funds(schemes, cache, manual, asof, today, stale_days=7, hist_from=Non
 
 def load_config():
     cfg = dict(DEFAULT_CONFIG)
-    cfg.update(load_json(CONFIG, {}))
+    cfg.update({k: v for k, v in load_json(CONFIG, {}).items() if v not in ("", None)})
     return cfg
 
 
@@ -280,37 +322,37 @@ def run(args):
         sys.exit(f"Parsed {len(latest)} rows but none are Regular-plan Growth schemes. "
                  "Run `inspect` on the source and check plan_filter in config.json.")
     cache = load_json(CACHE, {})
-    meta = load_json(META, {})
-    known = [date.fromisoformat(d) for c in cache.values() for d in c["navs"]]
+    before = {c: (v.get("full_from"), max(v["navs"]) if v["navs"] else None) for c, v in cache.items()}
     codes = set(schemes)
     add_rows(cache, latest, codes)
-    hist_rows = 0
+    hist_rows, failures = 0, []
     for hf in args.history_file or []:
         rows = parse_amfi(read_source(hf))
         hist_rows += len(rows)
         add_rows(cache, rows, codes)
     if cfg["history_url_template"] and not args.history_file:
-        incremental = len(known) >= 2 and not args.full
-        start = (max(known) - timedelta(days=7)) if incremental \
-            else today - timedelta(days=int(cfg["history_days"]))
-        for a, b in date_ranges(start, today):
-            url = cfg["history_url_template"].format(**{"from": a.strftime("%d-%b-%Y"),
-                                                        "to": b.strftime("%d-%b-%Y")})
-            rows = parse_amfi(fetch(url))
+        floor = max(parse_date(cfg["history_floor"]), today - timedelta(days=int(cfg["history_days"])))
+        for code in sorted(schemes):
+            full_from, last = before.get(code, (None, None))
+            incremental = bool(full_from and last) and not args.full
+            start = parse_date(last) - timedelta(days=7) if incremental else floor
+            try:
+                rows = fetch_history(schemes[code], start, today, cfg)
+            except Exception as e:  # keep going, report it
+                failures.append(f"{code} {schemes[code]['name']}: history download failed ({e})")
+                continue
             hist_rows += len(rows)
-            add_rows(cache, rows, codes)
-        if not incremental:
-            prev = parse_date(meta.get("hist_from", ""))
-            meta["hist_from"] = (min(prev, start) if prev else start).isoformat()
+            add_rows(cache, rows, {code})
+            if not incremental:
+                cache[code]["full_from"] = floor.isoformat()
     CACHE.parent.mkdir(exist_ok=True)
-    META.write_text(json.dumps(meta), encoding="utf-8")
     CACHE.write_text(json.dumps(cache), encoding="utf-8")
     manual = load_manual()
     added = sync_manual(schemes, manual)
     if added:
         manual = load_manual()
-    funds, warns, audit = build_funds(schemes, cache, manual, asof, today, cfg["stale_days"],
-                                      parse_date(meta.get("hist_from", "")))
+    funds, warns, audit = build_funds(schemes, cache, manual, asof, today, cfg["stale_days"])
+    warns = failures + warns
     for nm in sorted({r["name"] for r in latest if not r["plan"] and not r["option"]
                       and "regular" not in r["name"].lower() and "direct" not in r["name"].lower()}):
         warns.append(f"AMFI does not state the plan or option for '{nm}', so it was left out")
@@ -328,6 +370,11 @@ def run(args):
 
 def inspect(args):
     text = read_source(args.source)
+    if text.lstrip().startswith("{"):
+        rows = parse_history_json(text, {"code": "?", "name": "?"})
+        print(text[:300], "\n--- history JSON:", len(rows), "NAV records",
+              (f"from {min(r['date'] for r in rows)} to {max(r['date'] for r in rows)}" if rows else ""))
+        return
     print("--- first 25 lines ---")
     print("\n".join(text.splitlines()[:25]))
     rows = parse_amfi(text)
@@ -385,8 +432,21 @@ def selftest(_args=None):
     f3, w3, _ = build_funds(schemes, cache, {}, asof, today)
     y = next(i for i in f3 if i["id"] == "SIF-122")
     assert "launch" not in y and y["r1"] == 12.0 and any("no launch date" in t for t in w3)
-    f4, _, _ = build_funds(schemes, cache, {}, asof, today, hist_from=date(2024, 9, 1))
+    cache["SIF-143"]["full_from"] = "2025-04-01"
+    f4, _, _ = build_funds(schemes, cache, {}, asof, today)
     assert next(i for i in f4 if i["id"] == "SIF-143")["launch"] == "2026-11-06"
+    sample = ('{"data":{"mf_name":"qsif SIF","scheme_name":"qsif Hybrid Long-Short Fund","nav_groups":[{"nav_name":"x",'
+              '"historical_records":[{"date":"2026-10-19","nav":12.9183,"Plan":"Direct Plan","Option":"Growth Option"},'
+              '{"date":"2026-10-21","nav":12.7765,"Plan":"Direct Plan","Option":"Growth Option"},'
+              '{"date":"2026-10-22","nav":"","Plan":"Direct Plan","Option":"Growth Option"}]}]}}')
+    jr = parse_history_json(sample, {"code": "SIF-5", "name": "n"})
+    assert [(r["date"].isoformat(), r["nav"]) for r in jr] == [("2026-10-19", 12.9183), ("2026-10-21", 12.7765)]
+    assert parse_history_json('{"message":"No records to display"}', {"code": "SIF-5", "name": "n"}) == []
+    try:
+        parse_history_json("<html>blocked</html>", {"code": "SIF-5", "name": "n"})
+        raise SystemExit("HTML response should have raised an error")
+    except ValueError:
+        pass
     global MANUAL
     old, MANUAL = MANUAL, Path(tempfile.mkdtemp()) / "manual.csv"
     try:

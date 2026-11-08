@@ -6,6 +6,7 @@
    "name": "Titanium Equity Long-Short Fund",
    "amc": "Titanium SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-05-20",
    "isin": "INF277K30070"
   },
   {
@@ -13,6 +14,7 @@
    "name": "WSIF Equity Ex-Top 100 Long-Short Fund",
    "amc": "WSIF",
    "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "launch": "2026-05-11",
    "isin": "INF2F0030015"
   },
   {
@@ -20,13 +22,16 @@
    "name": "Altiva Hybrid Long-Short Fund",
    "amc": "Altiva SIF",
    "cat": "Hybrid Long-Short Fund",
-   "isin": "INF754K30052"
+   "launch": "2025-10-24",
+   "isin": "INF754K30052",
+   "r1": 8.42
   },
   {
    "id": "SIF-111",
    "name": "WSIF Equity Long-Short Fund",
    "amc": "WSIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-05-11",
    "isin": "INF2F0030072"
   },
   {
@@ -34,6 +39,7 @@
    "name": "Arthaya Equity Long Short Fund",
    "amc": "Arthaya SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-05-29",
    "isin": "INF582M30012"
   },
   {
@@ -41,6 +47,7 @@
    "name": "qsif Sector Rotation Long-Short Fund",
    "amc": "qsif SIF",
    "cat": "Sector Rotation Long-Short Fund",
+   "launch": "2026-05-18",
    "isin": "INF966L30308"
   },
   {
@@ -48,6 +55,7 @@
    "name": "Altiva Equity Ex- Top 100 Long - Short Fund",
    "amc": "Altiva SIF",
    "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "launch": "2026-06-10",
    "isin": "INF754K30136"
   },
   {
@@ -55,6 +63,7 @@
    "name": "RedHex Hybrid Long-Short Fund",
    "amc": "RedHex SIF",
    "cat": "Hybrid Long-Short Fund",
+   "launch": "2026-06-25",
    "isin": "INF336L30015"
   },
   {
@@ -62,13 +71,16 @@
    "name": "Magnum Hybrid Long Short Fund",
    "amc": "Magnum SIF",
    "cat": "Hybrid Long-Short Fund",
-   "isin": "INF200K30015"
+   "launch": "2025-10-29",
+   "isin": "INF200K30015",
+   "r1": 2.46
   },
   {
    "id": "SIF-136",
    "name": "Platinum Hybrid Long-Short Fund",
    "amc": "Platinum SIF",
    "cat": "Hybrid Long-Short Fund",
+   "launch": "2026-06-11",
    "isin": "INF769K30019"
   },
   {
@@ -76,6 +88,7 @@
    "name": "Prism Hybrid Long - Short Fund",
    "amc": "Prism SIF",
    "cat": "Hybrid Long-Short Fund",
+   "launch": "2026-07-23",
    "isin": "INF22M030019"
   },
   {
@@ -83,6 +96,7 @@
    "name": "DynaSIF Equity Ex-Top 100 Long - Short Fund",
    "amc": "DynaSIF SIF",
    "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "launch": "2026-06-29",
    "isin": "INF579M30133"
   },
   {
@@ -90,6 +104,7 @@
    "name": "INFINITY HYBRID LONG-SHORT FUND",
    "amc": "Infinity SIF",
    "cat": "Hybrid Long-Short Fund",
+   "launch": "2026-07-09",
    "isin": "INF174K30046"
   },
   {
@@ -97,6 +112,7 @@
    "name": "Summit Equity Long-Short Fund",
    "amc": "SUMMIT SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-07-24",
    "isin": "INF205K30014"
   },
   {
@@ -104,6 +120,7 @@
    "name": "Apex Equity Long-Short Fund",
    "amc": "Apex SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-09-01",
    "isin": "INF209K30107"
   },
   {
@@ -111,6 +128,7 @@
    "name": "Apex Equity Ex-Top 100 Long-short Fund",
    "amc": "Apex SIF",
    "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "launch": "2026-09-01",
    "isin": "INF209K30081"
   },
   {
@@ -118,6 +136,7 @@
    "name": "Magnum Equity Ex-Top 100 Long Short Fund",
    "amc": "Magnum SIF",
    "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "launch": "2026-09-02",
    "isin": "INF200K30072"
   },
   {
@@ -125,6 +144,7 @@
    "name": "Altiva Equity Long-Short Fund",
    "amc": "Altiva SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-10-05",
    "isin": "INF754K30219"
   },
   {
@@ -132,6 +152,7 @@
    "name": "Titanium Active Asset Allocator Long-Short Fund",
    "amc": "Titanium SIF",
    "cat": "Active Asset Allocator Long-Short Fund",
+   "launch": "2026-10-16",
    "isin": "INF277K30138"
   },
   {
@@ -139,6 +160,7 @@
    "name": "MSIF Equity Long-Short Fund",
    "amc": "MSIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-10-26",
    "isin": "INF174V30019"
   },
   {
@@ -146,6 +168,7 @@
    "name": "Summit Active Asset Allocator Long-Short Fund",
    "amc": "SUMMIT SIF",
    "cat": "Active Asset Allocator Long-Short Fund",
+   "launch": "2026-11-04",
    "isin": "INF205K30071"
   },
   {
@@ -153,6 +176,7 @@
    "name": "Diviniti Equity Long Short Fund",
    "amc": "Diviniti SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2025-12-03",
    "isin": "INF00XX30019"
   },
   {
@@ -160,6 +184,7 @@
    "name": "qsif Equity Ex-Top 100 Long-Short Fund",
    "amc": "qsif SIF",
    "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "launch": "2025-11-13",
    "isin": "INF966L30183"
   },
   {
@@ -167,6 +192,7 @@
    "name": "Titanium Hybrid Long-Short Fund",
    "amc": "Titanium SIF",
    "cat": "Hybrid Long-Short Fund",
+   "launch": "2025-12-17",
    "isin": "INF277K30013"
   },
   {
@@ -174,13 +200,16 @@
    "name": "qsif Equity Long-Short Fund",
    "amc": "qsif SIF",
    "cat": "Equity Long-Short Fund",
-   "isin": "INF966L30027"
+   "launch": "2025-10-08",
+   "isin": "INF966L30027",
+   "r1": 6.23
   },
   {
    "id": "SIF-40",
    "name": "Arudha Hybrid Long-Short Fund",
    "amc": "Arudha SIF",
    "cat": "Hybrid Long-Short Fund",
+   "launch": "2026-02-04",
    "isin": "INF194K30010"
   },
   {
@@ -188,6 +217,7 @@
    "name": "DynaSIF Equity Long - Short Fund",
    "amc": "DynaSIF SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-02-27",
    "isin": "INF579M30018"
   },
   {
@@ -195,6 +225,7 @@
    "name": "Arudha Equity Long-Short Fund",
    "amc": "Arudha SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-03-30",
    "isin": "INF194K30358"
   },
   {
@@ -202,13 +233,16 @@
    "name": "qsif Hybrid Long-Short Fund",
    "amc": "qsif SIF",
    "cat": "Hybrid Long-Short Fund",
-   "isin": "INF966L30084"
+   "launch": "2025-10-20",
+   "isin": "INF966L30084",
+   "r1": 23.35
   },
   {
    "id": "SIF-80",
    "name": "Apex Hybrid Long-Short Fund",
    "amc": "Apex SIF",
    "cat": "Hybrid Long-Short Fund",
+   "launch": "2026-03-30",
    "isin": "INF209K30040"
   },
   {
@@ -216,6 +250,7 @@
    "name": "DynaSIF Active Asset Allocator Long-Short Fund",
    "amc": "DynaSIF SIF",
    "cat": "Active Asset Allocator Long-Short Fund",
+   "launch": "2026-03-30",
    "isin": "INF579M30075"
   },
   {
@@ -223,6 +258,7 @@
    "name": "qsif Active Asset Allocator Long-Short Fund",
    "amc": "qsif SIF",
    "cat": "Active Asset Allocator Long-Short Fund",
+   "launch": "2026-04-24",
    "isin": "INF966L30217"
   },
   {
@@ -230,6 +266,7 @@
    "name": "Sapphire Equity Long-Short SIF",
    "amc": "Sapphire SIF",
    "cat": "Equity Long-Short Fund",
+   "launch": "2026-04-29",
    "isin": "INF090I30014"
   }
  ]

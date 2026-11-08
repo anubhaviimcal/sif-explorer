@@ -1,5 +1,5 @@
 // Bump V when you change index.html and want every user to get it on the next visit.
-const V = "sif-v1";
+const V = "sif-v2";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 const put = (r, res) => { if (res && res.ok) { const cp = res.clone(); caches.open(V).then(c => c.put(r, cp)); } return res; };
 

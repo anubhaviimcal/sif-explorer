@@ -61,9 +61,9 @@ let D=SAMPLE,sel=[],tab="funds",amts=[0,0,0],q="",fc="",fa="",so="name";
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const ageY=f=>(new Date(D.asOf)-new Date(f.launch))/(365.25*864e5);
-const av=(f,n)=>ageY(f)>=n&&typeof f["r"+n]==="number";
+const av=(f,n)=>typeof f["r"+n]==="number"&&(!f.launch||ageY(f)>=n);
 const money=n=>"₹"+Math.round(n).toLocaleString("en-IN");
-const dt=s=>new Date(s).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+const dt=s=>!s?"NA":new Date(s).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
 function perf(f,n){
  if(av(f,n)){const v=f["r"+n];return `<b>${v.toFixed(2)}%</b><small>₹10,000 → ${money(1e4*Math.pow(1+v/100,n))}</small>`}
  return `<b class="na">NA</b><small>${ageY(f)<n?"scheme under "+n+(n>1?" years":" year"):"not reported"}</small>`}
@@ -90,7 +90,7 @@ function list(){
  let L=D.funds.filter(f=>(!fc||f.cat===fc)&&(!fa||f.amc===fa)&&(!q||(f.name+f.amc+f.cat).toLowerCase().includes(q.toLowerCase())));
  const nm=(a,b)=>a.name.localeCompare(b.name);let msg="";
  if(so==="name")L.sort(nm);else if(so==="amc")L.sort((a,b)=>a.amc.localeCompare(b.amc)||nm(a,b));
- else if(so==="exp")L.sort((a,b)=>a.exp-b.exp||nm(a,b));else if(so==="launch")L.sort((a,b)=>new Date(b.launch)-new Date(a.launch));
+ else if(so==="exp")L.sort((a,b)=>a.exp-b.exp||nm(a,b));else if(so==="launch")L.sort((a,b)=>(Date.parse(b.launch)||0)-(Date.parse(a.launch)||0));
  else{const n=+so[1],e=L.filter(f=>av(f,n)).sort((a,b)=>b["r"+n]-a["r"+n]),r=L.filter(f=>!av(f,n)).sort(nm);L=e.concat(r);
   msg=`${e.length} of ${L.length} funds have a reportable ${n}-year track record; the rest are listed after them in A–Z order. Sorting by returns is not a ranking or a recommendation.`}
  $("#pn").textContent=(msg?msg+" ":"")+`CAGR as of ${dt(D.asOf)}, shown only for periods the scheme has completed. Past performance may or may not be sustained in future.`;
@@ -125,10 +125,10 @@ function drawLearn(){
  <div class="card"><b>Hybrid</b><div class="mut">For example hybrid long-short and active asset allocator long-short: mix asset classes and shift between them. Hybrid long-short funds have held most SIF assets so far.</div></div>
  <p class="mut">Descriptions are simplified. Read each scheme’s offer document for its exact strategy, limits and risks.</p>`}
 function drawData(){
- $("#v").innerHTML=`<h2>Load your own data</h2><p class="sub">Paste JSON in the same shape as the sample. Fields: asOf (month-end date), funds[] with id, name, amc, cat, launch (YYYY-MM-DD), exp, exit, mgr, r1, r3, r5, src. Leave r1, r3, r5 out when not reportable. Use figures from AMC factsheets or AMFI. Data pasted here lasts only until you close the app; the app normally loads data/sif.json by itself.</p>
+ $("#v").innerHTML=`<h2>Load your own data</h2><p class="sub">Paste JSON in the same shape as the sample. Fields: asOf (month-end date), funds[] with id, name, amc, cat, launch (YYYY-MM-DD, optional), exp, exit, mgr, r1, r3, r5, src. Leave r1, r3, r5 out when not reportable. Use figures from AMC factsheets or AMFI. Data pasted here lasts only until you close the app; the app normally loads data/sif.json by itself.</p>
  <textarea id="j" rows="10" spellcheck="false">${esc(JSON.stringify(D,null,1))}</textarea><p><button class="b" onclick="load()">Load data</button> <button class="b" onclick="D=SAMPLE;sel=[];drawTabs();draw()">Reset to sample</button></p><div class="mut" id="jm"></div>`}
 function load(){try{const d=JSON.parse($("#j").value);
- if(!d.asOf||!Array.isArray(d.funds)||d.funds.some(f=>!f.id||!f.name||!f.amc||!f.cat||!f.launch))throw new Error("Each fund needs id, name, amc, cat and launch, and the data needs asOf.");
+ if(!d.asOf||!Array.isArray(d.funds)||d.funds.some(f=>!f.id||!f.name||!f.amc||!f.cat))throw new Error("Each fund needs id, name, amc and cat, and the data needs asOf.");
  d.demo=false;D=d;sel=[];drawTabs();$("#jm").textContent="Loaded "+d.funds.length+" funds. This stays only until you close the page."}catch(e){$("#jm").textContent="Could not load: "+e.message}}
 let deferred=null;
 addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;$("#inst").innerHTML='<button class="b" id="ib">Install app</button>';$("#ib").onclick=async()=>{deferred.prompt();await deferred.userChoice;deferred=null;$("#inst").innerHTML=""}});

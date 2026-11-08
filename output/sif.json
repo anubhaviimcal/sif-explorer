@@ -1,0 +1,236 @@
+{
+ "asOf": "2026-10-31",
+ "funds": [
+  {
+   "id": "SIF-102",
+   "name": "Titanium Equity Long-Short Fund",
+   "amc": "Titanium SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF277K30070"
+  },
+  {
+   "id": "SIF-105",
+   "name": "WSIF Equity Ex-Top 100 Long-Short Fund",
+   "amc": "WSIF",
+   "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "isin": "INF2F0030015"
+  },
+  {
+   "id": "SIF-11",
+   "name": "Altiva Hybrid Long-Short Fund",
+   "amc": "Altiva SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF754K30052"
+  },
+  {
+   "id": "SIF-111",
+   "name": "WSIF Equity Long-Short Fund",
+   "amc": "WSIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF2F0030072"
+  },
+  {
+   "id": "SIF-114",
+   "name": "Arthaya Equity Long Short Fund",
+   "amc": "Arthaya SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF582M30012"
+  },
+  {
+   "id": "SIF-117",
+   "name": "qsif Sector Rotation Long-Short Fund",
+   "amc": "qsif SIF",
+   "cat": "Sector Rotation Long-Short Fund",
+   "isin": "INF966L30308"
+  },
+  {
+   "id": "SIF-122",
+   "name": "Altiva Equity Ex- Top 100 Long - Short Fund",
+   "amc": "Altiva SIF",
+   "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "isin": "INF754K30136"
+  },
+  {
+   "id": "SIF-128",
+   "name": "RedHex Hybrid Long-Short Fund",
+   "amc": "RedHex SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF336L30015"
+  },
+  {
+   "id": "SIF-13",
+   "name": "Magnum Hybrid Long Short Fund",
+   "amc": "Magnum SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF200K30015"
+  },
+  {
+   "id": "SIF-136",
+   "name": "Platinum Hybrid Long-Short Fund",
+   "amc": "Platinum SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF769K30019"
+  },
+  {
+   "id": "SIF-138",
+   "name": "Prism Hybrid Long - Short Fund",
+   "amc": "Prism SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF22M030019"
+  },
+  {
+   "id": "SIF-143",
+   "name": "DynaSIF Equity Ex-Top 100 Long - Short Fund",
+   "amc": "DynaSIF SIF",
+   "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "isin": "INF579M30133"
+  },
+  {
+   "id": "SIF-146",
+   "name": "INFINITY HYBRID LONG-SHORT FUND",
+   "amc": "Infinity SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF174K30046"
+  },
+  {
+   "id": "SIF-150",
+   "name": "Summit Equity Long-Short Fund",
+   "amc": "SUMMIT SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF205K30014"
+  },
+  {
+   "id": "SIF-154",
+   "name": "Apex Equity Long-Short Fund",
+   "amc": "Apex SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF209K30107"
+  },
+  {
+   "id": "SIF-156",
+   "name": "Apex Equity Ex-Top 100 Long-short Fund",
+   "amc": "Apex SIF",
+   "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "isin": "INF209K30081"
+  },
+  {
+   "id": "SIF-157",
+   "name": "Magnum Equity Ex-Top 100 Long Short Fund",
+   "amc": "Magnum SIF",
+   "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "isin": "INF200K30072"
+  },
+  {
+   "id": "SIF-161",
+   "name": "Altiva Equity Long-Short Fund",
+   "amc": "Altiva SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF754K30219"
+  },
+  {
+   "id": "SIF-169",
+   "name": "Titanium Active Asset Allocator Long-Short Fund",
+   "amc": "Titanium SIF",
+   "cat": "Active Asset Allocator Long-Short Fund",
+   "isin": "INF277K30138"
+  },
+  {
+   "id": "SIF-174",
+   "name": "MSIF Equity Long-Short Fund",
+   "amc": "MSIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF174V30019"
+  },
+  {
+   "id": "SIF-177",
+   "name": "Summit Active Asset Allocator Long-Short Fund",
+   "amc": "SUMMIT SIF",
+   "cat": "Active Asset Allocator Long-Short Fund",
+   "isin": "INF205K30071"
+  },
+  {
+   "id": "SIF-21",
+   "name": "Diviniti Equity Long Short Fund",
+   "amc": "Diviniti SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF00XX30019"
+  },
+  {
+   "id": "SIF-25",
+   "name": "qsif Equity Ex-Top 100 Long-Short Fund",
+   "amc": "qsif SIF",
+   "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "isin": "INF966L30183"
+  },
+  {
+   "id": "SIF-29",
+   "name": "Titanium Hybrid Long-Short Fund",
+   "amc": "Titanium SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF277K30013"
+  },
+  {
+   "id": "SIF-3",
+   "name": "qsif Equity Long-Short Fund",
+   "amc": "qsif SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF966L30027"
+  },
+  {
+   "id": "SIF-40",
+   "name": "Arudha Hybrid Long-Short Fund",
+   "amc": "Arudha SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF194K30010"
+  },
+  {
+   "id": "SIF-55",
+   "name": "DynaSIF Equity Long - Short Fund",
+   "amc": "DynaSIF SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF579M30018"
+  },
+  {
+   "id": "SIF-62",
+   "name": "Arudha Equity Long-Short Fund",
+   "amc": "Arudha SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF194K30358"
+  },
+  {
+   "id": "SIF-7",
+   "name": "qsif Hybrid Long-Short Fund",
+   "amc": "qsif SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF966L30084"
+  },
+  {
+   "id": "SIF-80",
+   "name": "Apex Hybrid Long-Short Fund",
+   "amc": "Apex SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "isin": "INF209K30040"
+  },
+  {
+   "id": "SIF-87",
+   "name": "DynaSIF Active Asset Allocator Long-Short Fund",
+   "amc": "DynaSIF SIF",
+   "cat": "Active Asset Allocator Long-Short Fund",
+   "isin": "INF579M30075"
+  },
+  {
+   "id": "SIF-93",
+   "name": "qsif Active Asset Allocator Long-Short Fund",
+   "amc": "qsif SIF",
+   "cat": "Active Asset Allocator Long-Short Fund",
+   "isin": "INF966L30217"
+  },
+  {
+   "id": "SIF-96",
+   "name": "Sapphire Equity Long-Short SIF",
+   "amc": "Sapphire SIF",
+   "cat": "Equity Long-Short Fund",
+   "isin": "INF090I30014"
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+Run date 2026-11-08, returns as of 2026-10-31
+33 Regular-plan Growth schemes, 0 history rows fetched, 33 new rows added to manual_fields.csv
+
+WARNINGS
+33 schemes have no launch date (set it in manual_fields.csv, or run the history download so it can be worked out): SIF-102 Titanium Equity Long-Short Fund; SIF-105 WSIF Equity Ex-Top 100 Long-Short Fund; SIF-11 Altiva Hybrid Long-Short Fund; SIF-111 WSIF Equity Long-Short Fund; SIF-114 Arthaya Equity Long Short Fund; SIF-117 qsif Sector Rotation Long-Short Fund; SIF-122 Altiva Equity Ex- Top 100 Long - Short Fund; SIF-128 RedHex Hybrid Long-Short Fund; SIF-13 Magnum Hybrid Long Short Fund; SIF-136 Platinum Hybrid Long-Short Fund; SIF-138 Prism Hybrid Long - Short Fund; SIF-143 DynaSIF Equity Ex-Top 100 Long - Short Fund; SIF-146 INFINITY HYBRID LONG-SHORT FUND; SIF-150 Summit Equity Long-Short Fund; SIF-154 Apex Equity Long-Short Fund; SIF-156 Apex Equity Ex-Top 100 Long-short Fund; SIF-157 Magnum Equity Ex-Top 100 Long Short Fund; SIF-161 Altiva Equity Long-Short Fund; SIF-169 Titanium Active Asset Allocator Long-Short Fund; SIF-174 MSIF Equity Long-Short Fund; SIF-177 Summit Active Asset Allocator Long-Short Fund; SIF-21 Diviniti Equity Long Short Fund; SIF-25 qsif Equity Ex-Top 100 Long-Short Fund; SIF-29 Titanium Hybrid Long-Short Fund; SIF-3 qsif Equity Long-Short Fund; SIF-40 Arudha Hybrid Long-Short Fund; SIF-55 DynaSIF Equity Long - Short Fund; SIF-62 Arudha Equity Long-Short Fund; SIF-7 qsif Hybrid Long-Short Fund; SIF-80 Apex Hybrid Long-Short Fund; SIF-87 DynaSIF Active Asset Allocator Long-Short Fund; SIF-93 qsif Active Asset Allocator Long-Short Fund; SIF-96 Sapphire Equity Long-Short SIF
+33 schemes are missing expense ratio, exit load or fund manager in manual_fields.csv
+AMFI does not state the plan or option for 'iSIF Active Asset Allocator Long-Short Fund', so it was left out
+AMFI does not state the plan or option for 'iSIF Equity Ex-Top 100 Long-Short Fund', so it was left out
+AMFI does not state the plan or option for 'iSIF Equity Long-Short Fund', so it was left out
+AMFI does not state the plan or option for 'iSIF Hybrid Long-Short Fund', so it was left out
+
+CAGR AUDIT (check a few against AMC factsheets)
+no scheme has completed a year yet

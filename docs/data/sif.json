@@ -172,6 +172,14 @@
    "isin": "INF205K30071"
   },
   {
+   "id": "SIF-183",
+   "name": "Eminence Hybrid Long Short Fund",
+   "amc": "Eminence SIF",
+   "cat": "Hybrid Long-Short Fund",
+   "launch": "2026-11-09",
+   "isin": "INF2VOA30045"
+  },
+  {
    "id": "SIF-21",
    "name": "Diviniti Equity Long Short Fund",
    "amc": "Diviniti SIF",

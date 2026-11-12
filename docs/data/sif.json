@@ -180,6 +180,14 @@
    "isin": "INF2VOA30045"
   },
   {
+   "id": "SIF-190",
+   "name": "Select Equity Ex-Top 100 Long-Short Fund",
+   "amc": "Sundaram Mutual Fund",
+   "cat": "Equity Ex-Top 100 Long-Short Fund",
+   "launch": "2026-11-11",
+   "isin": "INF903J30065"
+  },
+  {
    "id": "SIF-21",
    "name": "Diviniti Equity Long Short Fund",
    "amc": "Diviniti SIF",

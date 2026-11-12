@@ -1,8 +1,8 @@
-Run date 2026-11-10, returns as of 2026-10-31
-34 Regular-plan Growth schemes, 200 history rows fetched, 0 new rows added to manual_fields.csv
+Run date 2026-11-12, returns as of 2026-10-31
+35 Regular-plan Growth schemes, 228 history rows fetched, 1 new rows added to manual_fields.csv
 
 WARNINGS
-34 schemes are missing expense ratio, exit load or fund manager in manual_fields.csv
+35 schemes are missing expense ratio, exit load or fund manager in manual_fields.csv
 AMFI does not state the plan or option for 'iSIF Active Asset Allocator Long-Short Fund', so it was left out
 AMFI does not state the plan or option for 'iSIF Equity Ex-Top 100 Long-Short Fund', so it was left out
 AMFI does not state the plan or option for 'iSIF Equity Long-Short Fund', so it was left out

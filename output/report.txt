@@ -1,5 +1,5 @@
-Run date 2026-11-12, returns as of 2026-10-31
-35 Regular-plan Growth schemes, 204 history rows fetched, 0 new rows added to manual_fields.csv
+Run date 2026-11-13, returns as of 2026-10-31
+35 Regular-plan Growth schemes, 205 history rows fetched, 0 new rows added to manual_fields.csv
 
 WARNINGS
 35 schemes are missing expense ratio, exit load or fund manager in manual_fields.csv
